@@ -141,12 +141,11 @@
         }
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('showMaturityBtn').addEventListener('click', function() {
-                // Call the existing calculateMaturity function
                 calculateMaturity();
                 gtag('event', 'button_click', {
                     'event_category': 'engagement',
                     'event_label': 'Show Maturity',
-                    'value': 1 /
+                    'value': 1
                 });
             });
         });
