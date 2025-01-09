@@ -1,4 +1,4 @@
-# Plant Manager
+# 🌿 🥬 Plant Manager 🌱  🌻
 Gardeners can leverage the Plant Manager to help you know when to harvest your plants when they are matured.
 
 ## Plant Maturity Information
