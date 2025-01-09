@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden Maturity Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            margin-right: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Garden Maturity Tracker</h1>
+    <div class="input-group">
+        <label for="start-date">Start Date:</label>
+        <input type="date" id="start-date">
+    </div>
+    <div class="input-group">
+        <label for="category">Category:</label>
+        <select id="category">
+            <option value="Chef Faves">Chef Faves</option>
+            <option value="Salad Lover ">Salad Lover</option>
+            <option value="Budding Florist">Budding Florist</option>
+        </select>
+    </div>
+    <button id="calculate-btn">Calculate Maturity</button>
+    <div id="results"></div>
+
+    <script>
+        // Hardcoded data
+        const plants = [
+            // New "Chef Faves" category
+            { name: "Thyme", category: "Chef Faves", daysToMaturity: 90 },
+            { name: "Bull's Blood", category: "Chef Faves", daysToMaturity: 35 },
+            { name: "Green Tatsoi", category: "Chef Faves", daysToMaturity: 21 },
+            { name: "Green Salanova", category: "Chef Faves", daysToMaturity: 55 },
+            { name: "Basil", category: "Chef Faves", daysToMaturity: 68 },
+            { name: "Collard Greens", category: "Chef Faves", daysToMaturity: 60 },
+            { name: "Celery", category: "Chef Faves", daysToMaturity: 75 },
+            { name: "Lemon Basil", category: "Chef Faves", daysToMaturity: 70 },
+            { name: "Yellow Swiss Chard", category: "Chef Faves", daysToMaturity: 60 },
+            { name: "Green Bok Choy", category: "Chef Faves", daysToMaturity: 20 },
+            { name: "Sunflower", category: "Chef Faves", daysToMaturity: 65 },
+            { name: "Perpetual Spinach", category: "Chef Faves", daysToMaturity: 40 },
+            { name: "Kale Lacinato", category: "Chef Faves", daysToMaturity: 65 },
+            { name: "Purple Kohlrabi", category: "Chef Faves", daysToMaturity: 45 },
+            // "Budding Florist" category, which has wrong days to maturity info.
+            { name: "Breen", category: "Budding Florist", daysToMaturity: 45 },
+            { name: "Bull's Blood", category: "Budding Florist", daysToMaturity: 35 },
+            { name: "Butterhead", category: "Budding Florist", daysToMaturity: 55 },
+            { name: "Pink Celery", category: "Budding Florist", daysToMaturity: 75 },
+            { name: "Red Sorrel", category: "Budding Florist", daysToMaturity: 60 },
+            { name: "Salanova", category: "Budding Florist", daysToMaturity: 50 },
+            { name: "Yellow Chard", category: "Budding Florist", daysToMaturity: 60 },
+            { name: "Bunching Onions", category: "Budding Florist", daysToMaturity: 50 },
+            { name: "Lemon Balm", category: "Budding Florist", daysToMaturity: 70 },
+            { name: "Purple Basil", category: "Budding Florist", daysToMaturity: 65 },
+            { name: "Celosia", category: "Budding Florist", daysToMaturity: 90 },
+            { name: "Snapdragon", category: "Budding Florist", daysToMaturity: 100 },
+            { name: "Stock Flower", category: "Budding Florist", daysToMaturity: 75 },
+            { name: "Sunflower", category: "Budding Florist", daysToMaturity: 65 },
+            { name: "White Petunia", category: "Budding Florist", daysToMaturity: 80 }
+        ];
+
+
+        // Event Listener for Calculate Button
+        document.getElementById('calculate-btn').addEventListener('click', () => {
+            const startDateInput = document.getElementById('start-date').value;
+            const category = document.getElementById('category').value;
+
+            if (!startDateInput) {
+                alert("Please select a start date.");
+                return;
+            }
+
+            const startDate = new Date(startDateInput);
+            const today = new Date();
+            const elapsedDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+
+            // Filter and calculate maturity
+            const filteredPlants = plants
+                .filter(plant => plant.category === category)
+                .map(plant => ({
+                    ...plant,
+                    daysToMaturityRemaining: plant.daysToMaturity - elapsedDays
+                }))
+                .sort((a, b) => a.daysToMaturityRemaining - b.daysToMaturityRemaining);
+
+            // Render results
+            const resultsDiv = document.getElementById('results');
+            if (filteredPlants.length === 0) {
+                resultsDiv.innerHTML = "<p>No plants found for the selected category.</p>";
+                return;
+            }
+
+            let tableHtml = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Days to Maturity Remaining</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            filteredPlants.forEach(plant => {
+                tableHtml += `
+                    <tr>
+                        <td>${plant.name}</td>
+                        <td>${Math.max(plant.daysToMaturityRemaining, 0)}</td>
+                    </tr>
+                `;
+            });
+            tableHtml += "</tbody></table>";
+            resultsDiv.innerHTML = tableHtml;
+        });
+    </script>
+</body>
+</html>
