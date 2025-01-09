@@ -62,13 +62,10 @@
             <button id="showMaturityBtn" style="background-color: green; color:white; padding: 8px; border:none; border-radius:10px">Show Maturity</button>
         </div>
             <div id="results"></div>
-
     </div>
-
     <script type="module">
         import { plants } from './plants.js';
 
-        // Calculate Garden Age Function
         function calculateGardenAge() {
             const plantDateInput = document.getElementById("plantDate").value;
             if (!plantDateInput) return;
@@ -82,7 +79,6 @@
             document.getElementById("garden-age").textContent = diffDays;
         }
 
-        // Calculate Maturity Function
         function calculateMaturity() {
             console.log("calculateMaturity called");
 
@@ -90,10 +86,10 @@
             const category = document.getElementById("category").value;
             const results = document.getElementById("results");
             results.innerHTML = '<br><div class="message">Congrats! Your garden is <span class="green-text" id="garden-age">0</span> days old.</div>';
-            calculateGardenAge(); // Update garden age at the top
+            calculateGardenAge();
 
             if (!plantDateInput || !category) {
-                results.innerHTML += "<p>Please select a plant start date and a category.</p>";
+                results.innerHTML += "<p>Please select a plant date and a plant type category.</p>";
                 return;
             }
 
@@ -143,13 +139,42 @@
             table.appendChild(tbody);
             results.appendChild(table);
         }
-
-        // Add event listener to the button after DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('showMaturityBtn').addEventListener('click', calculateMaturity);
+            document.getElementById('showMaturityBtn').addEventListener('click', function() {
+                // Call the existing calculateMaturity function
+                calculateMaturity();
+                gtag('event', 'button_click', {
+                    'event_category': 'engagement',
+                    'event_label': 'Show Maturity',
+                    'value': 1 /
+                });
+            });
         });
     </script>
-    <p style="text-align: center;"> Made by <a href="https://www.linkedin.com/in/millerbrooke">Brooke Miller</a>.  Enjoyed? <a href="https://venmo.com/u/Brooke-Miller-5">Buy me a coffee</a>!</p>
+    <p style="text-align: center;"> 
+        Made by 
+        <a 
+            href="https://www.linkedin.com/in/millerbrooke" 
+            target="_blank" 
+            onclick="gtag('event', 'link_click', { 
+                'event_category': 'outbound_link', 
+                'event_label': 'LinkedIn Profile', 
+                'value': 1 
+            });">
+            Brooke Miller
+        </a>.  
+        Enjoyed? 
+        <a 
+            href="https://venmo.com/u/Brooke-Miller-5" 
+            target="_blank" 
+            onclick="gtag('event', 'link_click', { 
+                'event_category': 'outbound_link', 
+                'event_label': 'Venmo Page', 
+                'value': 1 
+            });">
+            Buy me a coffee
+        </a>!
+    </p><br>
     <p style="text-align: center; font-size: small;"><i> Disclaimer: The maturity data provided on this website is for informational purposes only. 
         While efforts have been made to ensure accuracy, the data is derived from publicly available horticultural 
         information. This tool is independent and not affiliated with any specific brands or services.
