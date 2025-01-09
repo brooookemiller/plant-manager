@@ -3,138 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Garden Maturity Tracker</title>
+    <title>Garden Tracker</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        .input-group {
-            margin-bottom: 20px;
+        h1 {
+            text-align: center;
         }
-        label {
-            margin-right: 10px;
+        .message {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .green-text {
+            color: green;
+        }
+        .ready-to-harvest {
+            color: green;
+            font-weight: bold;
         }
         table {
-            border-collapse: collapse;
             width: 100%;
+            border-collapse: collapse;
             margin-top: 20px;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+        table, th, td {
+            border: 1px solid black;
         }
-        th {
-            background-color: #f4f4f4;
+        th, td {
+            padding: 10px;
+            text-align: left;
         }
     </style>
 </head>
 <body>
-    <h1>Garden Maturity Tracker</h1>
-    <div class="input-group">
-        <label for="start-date">Start Date:</label>
-        <input type="date" id="start-date">
-    </div>
-    <div class="input-group">
+    <div id="app">
+        <h1>Garden Maturity Tracker</h1>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate">
         <label for="category">Category:</label>
         <select id="category">
-            <option value="Chef Faves">Chef Faves</option>
-            <option value="Salad Lover ">Salad Lover</option>
-            <option value="Budding Florist">Budding Florist</option>
+            <option value="Plants for Chefs">Plants for Chefs</option>
+            <option value="Sad Salad Girlies">Sad Salad Girlies</option>
+            <option value="Flower Lovers">Flower Lovers</option>
         </select>
+        <button id="showMaturityBtn">Show Maturity</button>
+        <div id="results"></div>
     </div>
-    <button id="calculate-btn">Calculate Maturity</button>
-    <div id="results"></div>
 
-    <script>
-        // Hardcoded data
-        const plants = [
-            // New "Chef Faves" category
-            { name: "Thyme", category: "Chef Faves", daysToMaturity: 90 },
-            { name: "Bull's Blood", category: "Chef Faves", daysToMaturity: 35 },
-            { name: "Green Tatsoi", category: "Chef Faves", daysToMaturity: 21 },
-            { name: "Green Salanova", category: "Chef Faves", daysToMaturity: 55 },
-            { name: "Basil", category: "Chef Faves", daysToMaturity: 68 },
-            { name: "Collard Greens", category: "Chef Faves", daysToMaturity: 60 },
-            { name: "Celery", category: "Chef Faves", daysToMaturity: 75 },
-            { name: "Lemon Basil", category: "Chef Faves", daysToMaturity: 70 },
-            { name: "Yellow Swiss Chard", category: "Chef Faves", daysToMaturity: 60 },
-            { name: "Green Bok Choy", category: "Chef Faves", daysToMaturity: 20 },
-            { name: "Sunflower", category: "Chef Faves", daysToMaturity: 65 },
-            { name: "Perpetual Spinach", category: "Chef Faves", daysToMaturity: 40 },
-            { name: "Kale Lacinato", category: "Chef Faves", daysToMaturity: 65 },
-            { name: "Purple Kohlrabi", category: "Chef Faves", daysToMaturity: 45 },
-            // "Budding Florist" category, which has wrong days to maturity info.
-            { name: "Breen", category: "Budding Florist", daysToMaturity: 45 },
-            { name: "Bull's Blood", category: "Budding Florist", daysToMaturity: 35 },
-            { name: "Butterhead", category: "Budding Florist", daysToMaturity: 55 },
-            { name: "Pink Celery", category: "Budding Florist", daysToMaturity: 75 },
-            { name: "Red Sorrel", category: "Budding Florist", daysToMaturity: 60 },
-            { name: "Salanova", category: "Budding Florist", daysToMaturity: 50 },
-            { name: "Yellow Chard", category: "Budding Florist", daysToMaturity: 60 },
-            { name: "Bunching Onions", category: "Budding Florist", daysToMaturity: 50 },
-            { name: "Lemon Balm", category: "Budding Florist", daysToMaturity: 70 },
-            { name: "Purple Basil", category: "Budding Florist", daysToMaturity: 65 },
-            { name: "Celosia", category: "Budding Florist", daysToMaturity: 90 },
-            { name: "Snapdragon", category: "Budding Florist", daysToMaturity: 100 },
-            { name: "Stock Flower", category: "Budding Florist", daysToMaturity: 75 },
-            { name: "Sunflower", category: "Budding Florist", daysToMaturity: 65 },
-            { name: "White Petunia", category: "Budding Florist", daysToMaturity: 80 }
-        ];
+    <script type="module">
+        import { plants } from './plants.js';
 
+        // Calculate Garden Age Function
+        function calculateGardenAge() {
+            const startDateInput = document.getElementById("startDate").value;
+            if (!startDateInput) return;
 
-        // Event Listener for Calculate Button
-        document.getElementById('calculate-btn').addEventListener('click', () => {
-            const startDateInput = document.getElementById('start-date').value;
-            const category = document.getElementById('category').value;
+            const startDate = new Date(startDateInput);
+            const today = new Date();
+            const diffTime = Math.abs(today - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const results = document.getElementById("results");
 
-            if (!startDateInput) {
-                alert("Please select a start date.");
+            document.getElementById("garden-age").textContent = diffDays;
+        }
+
+        // Calculate Maturity Function
+        function calculateMaturity() {
+            console.log("calculateMaturity called");
+
+            const startDateInput = document.getElementById("startDate").value;
+            const category = document.getElementById("category").value;
+            const results = document.getElementById("results");
+            results.innerHTML = '<br><div class="message">Congrats! Your garden is <span class="green-text" id="garden-age">0</span> Days old </div>';
+            calculateGardenAge(); // Update garden age at the top
+
+            if (!startDateInput || !category) {
+                results.innerHTML += "<p>Please select a start date and a category.</p>";
                 return;
             }
 
             const startDate = new Date(startDateInput);
             const today = new Date();
-            const elapsedDays = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+            const filteredPlants = plants.filter(plant => plant.category === category);
 
-            // Filter and calculate maturity
-            const filteredPlants = plants
-                .filter(plant => plant.category === category)
-                .map(plant => ({
-                    ...plant,
-                    daysToMaturityRemaining: plant.daysToMaturity - elapsedDays
-                }))
-                .sort((a, b) => a.daysToMaturityRemaining - b.daysToMaturityRemaining);
+            console.log("Filtered Plants:", filteredPlants);
 
-            // Render results
-            const resultsDiv = document.getElementById('results');
-            if (filteredPlants.length === 0) {
-                resultsDiv.innerHTML = "<p>No plants found for the selected category.</p>";
-                return;
-            }
+            const sortedPlants = filteredPlants
+                .map(plant => {
+                    const daysToMaturity = plant.daysToMaturity;
+                    const maturityDate = new Date(startDate);
+                    maturityDate.setDate(maturityDate.getDate() + daysToMaturity);
 
-            let tableHtml = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Days to Maturity Remaining</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            filteredPlants.forEach(plant => {
-                tableHtml += `
-                    <tr>
-                        <td>${plant.name}</td>
-                        <td>${Math.max(plant.daysToMaturityRemaining, 0)}</td>
-                    </tr>
-                `;
+                    const daysUntilMature = Math.ceil((maturityDate - today) / (1000 * 60 * 60 * 24));
+                    return { ...plant, daysUntilMature, maturityDate };
+                })
+                .sort((a, b) => a.daysUntilMature - b.daysUntilMature);
+
+            console.log("Sorted Plants:", sortedPlants);
+
+            const table = document.createElement("table");
+            const thead = document.createElement("thead");
+            thead.innerHTML = "<tr><th>Plant</th><th>Maturity Status</th></tr>";
+            table.appendChild(thead);
+
+            const tbody = document.createElement("tbody");
+            sortedPlants.forEach(plant => {
+                const row = document.createElement("tr");
+                const plantCell = document.createElement("td");
+                const statusCell = document.createElement("td");
+
+                plantCell.textContent = plant.name;
+
+                if (plant.daysUntilMature <= 0) {
+                    statusCell.innerHTML = `<span class="ready-to-harvest">Plant is ready to harvest! Maturity expected ${Math.abs(plant.daysUntilMature)} days ago.</span>`;
+                } else {
+                    statusCell.textContent = `${plant.daysUntilMature} days until maturity`;
+                }
+
+                row.appendChild(plantCell);
+                row.appendChild(statusCell);
+                tbody.appendChild(row);
             });
-            tableHtml += "</tbody></table>";
-            resultsDiv.innerHTML = tableHtml;
+
+            table.appendChild(tbody);
+            results.appendChild(table);
+        }
+
+        // Add event listener to the button after DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('showMaturityBtn').addEventListener('click', calculateMaturity);
         });
     </script>
 </body>
 </html>
+
