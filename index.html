@@ -41,16 +41,19 @@
 <body>
     <div id="app">
         <h1>Garden Maturity Tracker</h1>
-        <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate">
-        <label for="category">Category:</label>
-        <select id="category">
-            <option value="Plants for Chefs">Plants for Chefs</option>
-            <option value="Sad Salad Girlies">Sad Salad Girlies</option>
-            <option value="Flower Lovers">Flower Lovers</option>
-        </select>
-        <button id="showMaturityBtn">Show Maturity</button>
-        <div id="results"></div>
+        <div style="display:grid;justify-content:center;align-items:center;text-align:center;">
+            <label for="plantDate" style="color:green;font-size: large;">Plant Date</label>
+            <input type="date" id="plantDate"><br>
+            <label for="category" style="color:green;font-size: large;">Category</label>
+            <select id="category">
+                <option value="Plants for Chefs">Plants for Chefs</option>
+                <option value="Sad Salad Girlies">Sad Salad Girlies</option>
+                <option value="Flower Lovers">Flower Lovers</option>
+            </select><br><br>
+            <button id="showMaturityBtn" style="background-color: green; color:white; padding: 8px; border:none; border-radius:10px">Show Maturity</button>
+        </div>
+            <div id="results"></div>
+
     </div>
 
     <script type="module">
@@ -58,12 +61,12 @@
 
         // Calculate Garden Age Function
         function calculateGardenAge() {
-            const startDateInput = document.getElementById("startDate").value;
-            if (!startDateInput) return;
+            const plantDateInput = document.getElementById("plantDate").value;
+            if (!plantDateInput) return;
 
-            const startDate = new Date(startDateInput);
+            const plantDate = new Date(plantDateInput);
             const today = new Date();
-            const diffTime = Math.abs(today - startDate);
+            const diffTime = Math.abs(today - plantDate);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             const results = document.getElementById("results");
 
@@ -74,18 +77,18 @@
         function calculateMaturity() {
             console.log("calculateMaturity called");
 
-            const startDateInput = document.getElementById("startDate").value;
+            const plantDateInput = document.getElementById("plantDate").value;
             const category = document.getElementById("category").value;
             const results = document.getElementById("results");
-            results.innerHTML = '<br><div class="message">Congrats! Your garden is <span class="green-text" id="garden-age">0</span> Days old </div>';
+            results.innerHTML = '<br><div class="message">Congrats! Your garden is <span class="green-text" id="garden-age">0</span> days old.</div>';
             calculateGardenAge(); // Update garden age at the top
 
-            if (!startDateInput || !category) {
-                results.innerHTML += "<p>Please select a start date and a category.</p>";
+            if (!plantDateInput || !category) {
+                results.innerHTML += "<p>Please select a plant start date and a category.</p>";
                 return;
             }
 
-            const startDate = new Date(startDateInput);
+            const plantDate = new Date(plantDateInput);
             const today = new Date();
             const filteredPlants = plants.filter(plant => plant.category === category);
 
@@ -94,7 +97,7 @@
             const sortedPlants = filteredPlants
                 .map(plant => {
                     const daysToMaturity = plant.daysToMaturity;
-                    const maturityDate = new Date(startDate);
+                    const maturityDate = new Date(plantDate);
                     maturityDate.setDate(maturityDate.getDate() + daysToMaturity);
 
                     const daysUntilMature = Math.ceil((maturityDate - today) / (1000 * 60 * 60 * 24));
