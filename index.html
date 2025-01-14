@@ -8,6 +8,9 @@
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','GTM-KFZ3FCRL');</script>
     <!-- End Google Tag Manager -->
+    <meta property="og:title" content="Plant Manager: Keep Your Harvests on Track">
+    <meta property="og:description" content="Struggling to remember when to harvest your hydroponic plants? Meet Plant Manager, a simple tool designed to help you track harvest times and keep your garden thriving.">
+    <meta property="og:image" content="IMG_4735.jpeg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Garden Tracker</title>
@@ -59,15 +62,17 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KFZ3FCRL" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <div id="app">
-        <h1>Garden Maturity Tracker</h1>
+        <h1>Keep Your Harvests on Track</h1>
+        <p style="text-align: center; font-size: 0.8rem; color: #777; margin-top: 20px; line-height: 1.5;">
+        Struggling to remember when to harvest your hydroponic plants? Meet Plant Manager, a simple tool designed to help you track harvest times and keep your garden thriving. </p>
         <div style="display:grid;justify-content:center;align-items:center;text-align:left;">
-            <label for="plantDate" style="color:green;font-size: large;">Plant Date</label>
+            <label for="plantDate" style="color:green;font-size: large;"><b>Plant Date</b></label>
             <input type="date" id="plantDate"><br>
-            <label for="category" style="color:green;font-size: large;">Category</label>
+            <label for="category" style="color:green;font-size: large;"><b>Plant Category</b></label>
             <select id="category">
-                <option value="Plants for Chefs">Plants for Chefs</option>
-                <option value="Sad Salad Girlies">Sad Salad Girlies</option>
-                <option value="Flower Lovers">Flower Lovers</option>
+                <option value="Herbs & Kitchen Staples">Herbs & Kitchen Staples</option>
+                <option value="Salad Essentials">Salad Essentials</option>
+                <option value="Beautiful Blooms">Beautiful Blooms</option>
             </select><br><br>
             <button id="showMaturityBtn" style="background-color: green; color:white; padding: 8px; border:none; border-radius:10px">Show Maturity</button>
         </div>
@@ -95,12 +100,15 @@
             const plantDateInput = document.getElementById("plantDate").value;
             const category = document.getElementById("category").value;
             const results = document.getElementById("results");
-            results.innerHTML = '<br><div class="message">Congrats! Your garden is <span class="green-text" id="garden-age">0</span> days old.</div>';
-            calculateGardenAge();
+            
 
             if (!plantDateInput || !category) {
-                results.innerHTML += "<p>Please select a plant date and a plant type category.</p>";
+                results.innerHTML += "<p style='text-align: center;color:red;'> Please select a plant date and a plant type category.</p>";
                 return;
+            }
+            else{
+                results.innerHTML = '<br><div class="message">Congrats! Your garden is <span class="green-text" id="garden-age">0</span> days old.</div>';
+                calculateGardenAge();
             }
 
             const plantDate = new Date(plantDateInput);
@@ -160,29 +168,47 @@
             });
         });
     </script>
-    <p style="text-align: center;"> 
-        Made by 
-        <a href="https://www.linkedin.com/in/millerbrooke" 
-            target="_blank" 
-            onclick="gtag('event', 'link_click', { 
-                'event_category': 'outbound_link', 
-                'event_label': 'LinkedIn Profile', 
-                'value': 1 
-            });">
-            Brooke Miller.</a> Enjoyed? 
-        <a href="https://venmo.com/u/Brooke-Miller-5" 
-            target="_blank" 
-            onclick="gtag('event', 'link_click', { 
-                'event_category': 'outbound_link', 
-                'event_label': 'Venmo Page', 
-                'value': 1 
-            });">
-            Buy me a coffee!
+    <p style="text-align: center; margin-top: 20px; font-size: 1rem;">
+        <strong>New Request?</strong><br />
+        <a href="https://github.com/brooookemiller/plant-manager/blob/main/README.md" 
+           style="color: #007acc; text-decoration: none;" 
+           onclick="gtag('event', 'link_click', { 
+               'event_category': 'outbound_link', 
+               'event_label': 'Contribute', 
+               'value': 1 
+           });">
+            Contributions are welcome.
         </a>
-    </p><br>
-    <p style="text-align: center; font-size: small;"><i> Disclaimer: The maturity data provided on this website is for informational purposes only. 
+    </p>
+    
+    <p style="text-align: center; font-size: 0.9rem; color: #555; margin-top: 15px;">
+        Created by 
+        <a href="https://www.linkedin.com/in/millerbrooke" 
+           target="_blank" 
+           style="color: #007acc; text-decoration: none;" 
+           onclick="gtag('event', 'link_click', { 
+               'event_category': 'outbound_link', 
+               'event_label': 'LinkedIn Profile', 
+               'value': 1 
+           });">
+            Brooke Miller</a>.<br />
+        <a href="https://venmo.com/u/Brooke-Miller-5" 
+           target="_blank" 
+           style="color: #007acc; text-decoration: none;" 
+           onclick="gtag('event', 'link_click', { 
+               'event_category': 'outbound_link', 
+               'event_label': 'Venmo Page', 
+               'value': 1 
+           });">
+            Buy me a coffee</a> 
+        <img src="https://emojiisland.com/cdn/shop/products/Hot_Coffee_Emoji_large.png?v=1571606066" 
+             alt="Coffee Latte Emoji" width="15" style="vertical-align: middle; margin-left: 5px;" />
+    </p>
+    
+    <p style="text-align: center; font-size: 0.8rem; color: #777; margin-top: 20px; line-height: 1.5;">
+        <em>Disclaimer: The maturity data provided on this website is for informational purposes only. 
         While efforts have been made to ensure accuracy, the data is derived from publicly available horticultural 
-        information. This tool is independent and not affiliated with any specific brands or services.
-    </i></p>
+        information. This tool is independent and not affiliated with any specific brands or services.</em>
+    </p>    
 </body>
 </html>
