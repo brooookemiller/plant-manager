@@ -144,46 +144,21 @@
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('showMaturityBtn').addEventListener('click', function() {
                 calculateMaturity();
-                gtag('event', 'button_click', {
-                    'event_category': 'engagement',
-                    'event_label': 'Show Maturity',
-                    'value': 1 
-                });
             });
         });
     </script>
     <p style="text-align: center; margin-top: 20px; font-size: 1rem;">
-        <strong>New Request?</strong><br />
         <a href="https://github.com/brooookemiller/plant-manager/blob/main/README.md" 
-           style="color: #007acc; text-decoration: none;" 
-           onclick="gtag('event', 'link_click', { 
-               'event_category': 'outbound_link', 
-               'event_label': 'Contribute', 
-               'value': 1 
-           });">
+           style="color: #007acc; text-decoration: none;">
             Contributions are welcome.
         </a>
     </p>
     
     <p style="text-align: center; font-size: 0.9rem; color: #555; margin-top: 15px;">
-        Created by 
-        <a href="https://www.linkedin.com/in/millerbrooke" 
-           target="_blank" 
-           style="color: #007acc; text-decoration: none;" 
-           onclick="gtag('event', 'link_click', { 
-               'event_category': 'outbound_link', 
-               'event_label': 'LinkedIn Profile', 
-               'value': 1 
-           });">
-            Brooke Miller</a>.<br />
+        Created by Brooke Miller. <br/>
         <a href="https://venmo.com/u/Brooke-Miller-5" 
            target="_blank" 
-           style="color: #007acc; text-decoration: none;" 
-           onclick="gtag('event', 'link_click', { 
-               'event_category': 'outbound_link', 
-               'event_label': 'Venmo Page', 
-               'value': 1 
-           });">
+           style="color: #007acc; text-decoration: none;">
             Buy me a coffee</a> 
         <img src="https://emojiisland.com/cdn/shop/products/Hot_Coffee_Emoji_large.png?v=1571606066" 
          alt="" width="15" style="vertical-align: middle; margin-left: 5px;" aria-hidden="true" />
